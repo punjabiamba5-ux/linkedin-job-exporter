@@ -1,0 +1,19 @@
+Validation: 2026-11-11
+Historical Linux results below. Updated Windows/live results are documented in WINDOWS_TEST_RESULTS.txt.
+Environment: Linux, Python 3.12.14, Playwright 1.62.0, openpyxl 3.1.5, system Chromium
+Command: TEST_BROWSER_EXECUTABLE=/usr/bin/chromium python -m unittest discover -s tests -v
+
+PASS test_checkpoint_is_not_silently_scraped
+PASS test_visible_job_company_and_expansion
+PASS test_normalization_duplicates_and_files
+PASS test_reject_foreign_hosts_and_search_without_selected_job
+PASS test_pipeline_partial_error_cache_and_checkpoint
+PASS test_long_unicode_text_and_formula_safety
+
+6 tests passed in 8.401 seconds.
+Python compile check passed.
+Command-line help checked.
+
+Browser tests use local synthetic pages routed under LinkedIn-shaped URLs.
+They do not access a real LinkedIn account.
+Live LinkedIn extraction and the Windows desktop UI have not been tested.

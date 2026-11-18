@@ -1,0 +1,3 @@
+# Replace these example IDs with real job links. One URL per line.
+https://www.linkedin.com/jobs/view/1234567890/
+https://www.linkedin.com/jobs/view/1234567891/

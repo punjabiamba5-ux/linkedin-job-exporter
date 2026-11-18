@@ -1,0 +1,88 @@
+Windows validation session: 2026-11-12 to 2026-11-13
+LATEST: The subsequent simplified-interface acceptance test ended with 40 tests
+passing and a fresh actual desktop export of 3 jobs. One job was visibly closed
+and is now explicitly flagged. See ACCEPTANCE_TESTS.md; older results follow.
+FOLLOW-UP: Three improvement rounds passed 12, 17 and 23 automated tests.
+Final improved workbook: exports\delhi_ncr_improved.xlsx (3 live rows, all ok).
+Fresh live comparisons, actual Tkinter single-job export, and no-network
+completed-batch resume passed. See QA_REPORT.md for the final changes and limits.
+The initial Windows/live results below are retained as historical evidence.
+Python 3.11.16; Tk 8.6; Playwright 1.62.0; openpyxl 3.1.5.
+Dependencies installed in .venv; Playwright Chromium installed.
+
+LOCAL MOCK TESTS (not live LinkedIn):
+Command: .venv\Scripts\python.exe -X utf8 -m unittest discover -s tests -v
+PASS: all 8 tests in 24.075 seconds.
+Includes the original six checks plus current-layout/linked-title/company-label
+coverage and a delayed description-truncation-control regression.
+Python compile and CLI --help checks passed.
+
+AUTHENTICATED LIVE EXPORT:
+User entered credentials and completed sign-in directly in Chromium.
+An initial sign-in page reported reCAPTCHA connectivity trouble; the user
+completed sign-in manually. No verification or access restriction was bypassed.
+Specific job links were collected through rendered LinkedIn job search pages.
+No general search crawler was added.
+
+Final workbook: exports\delhi_ncr_live.xlsx
+3 attempted; 3 ok; 0 partial; 0 error; 0 blocked.
+1. https://www.linkedin.com/jobs/view/4484925897/
+   AI Engineer – FinTech | SYTalent | Gurugram, Haryana, India
+   Industry: Human Resources Services
+   Size: 11-50 employees; 0 associated members
+   Full description: 1,367 characters
+2. https://www.linkedin.com/jobs/view/4430457082/
+   Artificial Intelligence Engineer | Grey Chain AI | New Delhi, Delhi, India
+   Industry: IT Services and IT Consulting
+   Size: 51-200 employees; 82 associated members
+   Salary shown: 2M INR/yr - 3M INR/yr
+   Full description: 3,373 characters
+3. https://www.linkedin.com/jobs/view/4436305976/
+   AI Developer | TekSalt Solutions | Noida, Uttar Pradesh, India
+   Industry: IT Services and IT Consulting
+   Size: 51-200 employees; 6 associated members
+   Full description: 2,719 characters
+
+INDEPENDENT LIVE COMPARISON:
+Command: .venv\Scripts\python.exe -X utf8 verify_live_output.py
+PASS: all three jobs and company About pages match the saved workbook.
+Compared available title, employer, location, posting time, salary, employment
+and workplace types; checked description expansion and complete text including
+the final paragraph; compared company About, industry, size, headquarters,
+website, founded year, and specialties to fresh rendered About-page paragraphs.
+Checked job_url first in every sheet and no formula cells in the workbook.
+Detailed evidence: exports\live_verification.json and live_*.png.
+
+DESKTOP LIVE FLOW (2026-11-13):
+Command: .venv\Scripts\python.exe -X utf8 verify_desktop.py
+PASS: actual Tkinter widgets, Start callback, worker thread, Continue callback,
+live job/company export, saved workbook, counts, and restored button states.
+Single SYTalent job exported with status ok to a temporary workbook. The
+temporary workbook was removed; the three-job deliverable was preserved.
+This is callback-level GUI integration coverage, not a native mouse/keyboard
+test. Native Windows screenshot capture timed out and click geometry was
+unavailable; desktop appearance was not fully verified. Playwright browser
+screenshots succeeded.
+
+FIXES:
+- Windows setup works without the py launcher and validates Python/Tk.
+- GUI can open the sign-in browser without placeholder job URLs.
+- Selected-job URLs from the new /jobs/search-results/ route normalize.
+- Current signed-in job title, location, salary/type chips and descriptions.
+- Both plain and linked job titles, avoiding location-as-title errors.
+- Scoped company Overview labels, avoiding industry/size/recommendation mixing.
+- Wait for delayed expansion controls; verify clipping is gone; mark collapsed
+  descriptions partial instead of claiming complete extraction.
+
+UNAVAILABLE / LIMITS:
+Salary was not shown for SYTalent or TekSalt; those cells are blank.
+Explicit seniority, job function and job industries were not shown; blank.
+No guessing, applications, messages, follows, or CAPTCHA bypass was performed.
+This is a three-job sample, not proof that every LinkedIn layout is supported.
+Future login checkpoints/access limits still stop an export.
+The shipped examples\sample_output.xlsx remains fictional example data.
+
+PRIVACY:
+.linkedin-profile/ remains local and is excluded by .gitignore. No ZIP or shared
+profile was created. Do not distribute that folder. Page-text/screenshot
+diagnostics may contain personalized visible content; review before sharing.
